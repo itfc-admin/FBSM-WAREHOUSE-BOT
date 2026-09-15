@@ -1,25 +1,25 @@
-# FBSM Warehouse Bot V1.2 Railway
+# FBSM Warehouse Bot V1.3 — Universal Excel Import
 
-Кнопочная версия для ежедневной работы склада.
+Поддерживает:
+- CARIES NOTE / box-SKU формат (.xls/.xlsx)
+- TOFFEE Product List (.xls/.xlsx)
+- PLAC Packing (.xls/.xlsx)
+- старый простой CATEGORY/QTY
+- автоматическое определение формата
+- предварительный просмотр перед записью
+- кнопки Подтвердить / OTHER / Отмена
+- хранение Brand → Category → Style → Color → Size → SKU → Box → Qty
+- PostgreSQL / Railway
 
-Главное меню: Заказы / Склад / Клиенты / LIVE / Поиск / Отчёты / Админ.
+## Railway
+Переменные:
+BOT_TOKEN
+DATABASE_URL=${{Postgres.DATABASE_URL}}
+ADMIN_IDS=719400883
 
-Добавлено:
-- почти все действия через кнопки;
-- автоматическое создание таблиц PostgreSQL при старте;
-- новый клиент FB00 / RU / KG;
-- создание заказа;
-- привязка бренда к заказу кнопками;
-- статусы и история дат;
-- приёмка Packing List Excel;
-- остатки по брендам/категориям;
-- равномерное распределение бренда по заказам;
-- выгрузка Packing List Excel для заказа;
-- роли сотрудников.
+Start Command:
+python bot.py
 
-Railway variables:
-- BOT_TOKEN
-- DATABASE_URL=${{Postgres.DATABASE_URL}}
-- ADMIN_IDS=719400883
-
-Start command: python bot.py
+## Важно
+Если категория не распознана, позиция попадёт в OTHER.
+Это безопаснее, чем автоматически записать товар в неправильную категорию.
