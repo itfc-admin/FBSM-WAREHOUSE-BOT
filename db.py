@@ -1,10 +1,24 @@
 import asyncpg
-
+from pathlib import Path
 _pool = None
 
 async def init_db(database_url: str):
     global _pool
-    _pool = await asyncpg.create_pool(database_url, min_size=1, max_size=10)
+
+    _pool = await asyncpg.create_pool(
+        database_url,
+        min_size=1,
+        max_size=10
+    )
+
+    schema_path = Path(__file__).with_name("schema.sql")
+
+    if schema_path.exists():
+        schema_sql = schema_path.read_text(encoding="utf-8")
+
+        async with _pool.acquire() as conn:
+            await conn.execute(schema_sql)
+
     return _pool
 
 def pool():
